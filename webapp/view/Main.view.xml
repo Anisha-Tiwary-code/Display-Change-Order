@@ -70,11 +70,11 @@
                                                 value="{locHeaderModel>/orderType}" visible="true"/>
 
                             <Label id="idLblStartDtTime" labelFor="idStartDtTime" text="{i18n>lblStartDateTime}" />
-                            <DateTimePicker id="idStartDtTime" displayFormat="MM/dd/YYYY HH:mm"
+                            <DateTimePicker id="idStartDtTime" displayFormat="{i18n>dateTimeFormat}"
                                 editable="false" value="{locHeaderModel>/scheduledStartDtTime}"/>
 
                             <Label id="idLblEndDtTime" labelFor="idEndDtTime" text="{i18n>lblEndDateTime}"  />
-                            <DateTimePicker id="idEndDtTime" displayFormat="MM/dd/YYYY HH:mm"
+                            <DateTimePicker id="idEndDtTime" displayFormat="{i18n>dateTimeFormat}"
                                  editable="false" value = "{locHeaderModel>/scheduledEndDtTime}"/>     
                             
                                         

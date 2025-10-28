@@ -219,20 +219,20 @@ sap.ui.define([
 
                                 if(headerData.scheduledStartDtTime){
                                     scheduledStartDate = oRetrievedResult.results[0].Gstrs;
-                                    headerData.scheduledStartDtTime = headerData.scheduledStartDtTime.toLocaleString("en-GB", {
+                                    headerData.scheduledStartDtTime = headerData.scheduledStartDtTime.toLocaleString(oRes.getText("localeCode"), {
                                         day: "numeric",
                                         month: "short",
                                         year: "numeric"
-                                      });
+                                    });
                                 }
 
                                 if(headerData.scheduledEndDtTime){
                                     scheduledEndDate = oRetrievedResult.results[0].Gltrs;
-                                    headerData.scheduledEndDtTime = headerData.scheduledEndDtTime.toLocaleString("en-GB", {
+                                    headerData.scheduledEndDtTime = headerData.scheduledEndDtTime.toLocaleString(oRes.getText("localeCode"), {
                                         day: "numeric",
                                         month: "short",
                                         year: "numeric"
-                                      });
+                                    });
                                 }
 
                                 
