@@ -1,0 +1,143 @@
+{
+  "_version": "1.17.0",
+  "sap.app": {
+    "id": "com.reckitt.zpedisplaychangeorder",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.12.1",
+      "toolsId": "2a92f7d8-d95f-40c4-b541-cd1cc8bdabdb"
+    },
+    "dataSources": {
+      "ZOD_PE_DISPLAY_RELEASE_ORDER_SRV": {
+        "uri": "/sap/opu/odata/sap/ZOD_PE_DISPLAY_RELEASE_ORDER_SRV",
+        "type": "OData",
+        "settings": {
+          "localUri": "localService/metadata.xml"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.71.49",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.reckitt.zpedisplaychangeorder.i18n.i18n"
+        }
+      },
+      
+      "prodOrderModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZOD_PE_DISPLAY_RELEASE_ORDER_SRV",
+				"preload": true
+			}
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ],
+      
+			"js": [
+				{
+					"uri": "libs/quagga.min.js"
+				}
+			]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "com.reckitt.zpedisplaychangeorder.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "RouteCreateOrder",
+          "pattern": "/{Aufnr}",
+          "target": [
+              "TargetRouteCreateOrder"
+          ]
+        },
+        {
+          "name": "RouteMain",
+          "pattern": ":?query:",
+          "target": [
+            "TargetMain"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetRouteCreateOrder": {
+          "viewType": "XML",
+          "transition": "slide",
+          "viewName": "Main"
+        },
+        "TargetMain": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Main",
+          "viewName": "Main"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.reckitt.zpedisplaychangeorder.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

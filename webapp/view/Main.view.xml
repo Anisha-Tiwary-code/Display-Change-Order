@@ -1,0 +1,293 @@
+<mvc:View controllerName="com.reckitt.zpedisplaychangeorder.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+
+    <Shell id="shell" >
+		<App>
+			<pages>
+                <Page id="page" title="{i18n>title}">
+                    <content >
+
+                    <f:SimpleForm id="idSelectionForm" class="sapUiSizeCompact" editable="true" layout="ResponsiveGridLayout" title="{i18n>selectionFormTitle}" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                        <f:content>
+                            <Label text="{i18n>lblSelect}" id="idLblSelect" labelFor="displayChangeRadioGrp"/>
+                            <RadioButtonGroup xmlns="sap.m" columns="2" id="displayChangeRadioGrp" selectedIndex="-1"
+                                        select=".onSelectApplicationType">
+                                <buttons>
+                                    <RadioButton text="{i18n>lblDisplayOrderApp}" id="radioBtnDisplayOrder"/>
+                                    <RadioButton text="{i18n>lblChangeOrderApp}" id="radioBtnChangeOrder" editable="true"/>
+                                </buttons>
+                            </RadioButtonGroup>
+
+                            <Label id="idLblOrder" text="{i18n>lblOrder}" visible="true"
+                                                    labelFor="idOrderInput" />
+                            <Input id="idOrderInput" enabled="{locHeaderModel>/orderEditable}" showValueHelp="false"  
+                                                value="{locHeaderModel>/orderNumber}" visible="true" submit=".onChangeOrderNumber"
+                                                change=".onChangeOrderNumber" />
+
+                            <Button id="idOrderButton" icon="sap-icon://bar-code"
+										text="{i18n>btnScan}" press="onScanOrder" >
+							<layoutData>
+									<f:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+							</layoutData>
+						    </Button>
+                        </f:content>
+                    </f:SimpleForm>    
+
+                       <!-- layout="ResponsiveGridLayout" title="Header Data" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" singleContainerFullSize="false">  -->
+                    <f:SimpleForm id="idHeaderForm" editable="true" class="sapUiSizeCompact" layout="ColumnLayout" columnsM="1" columnsL="3" columnsXL="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+                                visible="{locHeaderModel>/isAppTypeSelected}">
+                    <!-- layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"> -->
+                                
+                        <f:content>
+
+                            <Label id="idLblOrderNumber" text="{i18n>lblOrder}" visible="true"
+                                                    labelFor="idOrderNumberDisplay" />
+                            <Input id="idOrderNumberDisplay" editable="false" showValueHelp="false"  
+                                                value="{locHeaderModel>/orderNumber}" visible="{locHeaderModel>/reqForOrderFields}" />
+
+                                
+                            <Label id="idLblMaterial" labelFor="idMaterialInput" text="{i18n>lblMaterial}" />
+                               
+                            <Input id="idMaterialInput" editable="false" showValueHelp="false" 
+                                                value="{locHeaderModel>/material}" visible="true"/>
+
+                            
+
+                            <Label id="idLblPlant" text="{i18n>lblPlant}" visible="true"
+                                                    labelFor="idPlantInput"/>
+                            <Input id="idPlantInput" editable="false" showValueHelp="false"  
+                                                value="{locHeaderModel>/plant}" visible="true"/>
+
+                            <Label id="idLblMaterialDesc" text="{i18n>lblMaterialDesc}" visible="true"
+                                                    labelFor="idMaterialDescInput"/>
+                            <Input id="idMaterialDescInput" editable="false"  showValueHelp="false"  
+                                                value="{locHeaderModel>/materialDesc}" visible="true"/>
+
+                            <Label id="idLblOrderType" labelFor="idOrderType" text="{i18n>lblOrderType}"/>
+                            <Input id="idOrderType" editable="false" showValueHelp="false" 
+                                                value="{locHeaderModel>/orderType}" visible="true"/>
+
+                            <Label id="idLblStartDtTime" labelFor="idStartDtTime" text="{i18n>lblStartDateTime}" />
+                            <DateTimePicker id="idStartDtTime" displayFormat="MM/dd/YYYY HH:mm"
+                                editable="false" value="{locHeaderModel>/scheduledStartDtTime}"/>
+
+                            <Label id="idLblEndDtTime" labelFor="idEndDtTime" text="{i18n>lblEndDateTime}"  />
+                            <DateTimePicker id="idEndDtTime" displayFormat="MM/dd/YYYY HH:mm"
+                                 editable="false" value = "{locHeaderModel>/scheduledEndDtTime}"/>     
+                            
+                                        
+                            
+                        </f:content>
+                    </f:SimpleForm>
+
+                    <f:SimpleForm class="sapUiSizeCompact" layout="ColumnLayout" columnsM="1" columnsL="3" columnsXL="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+                                visible="{locHeaderModel>/isAppTypeSelected}">
+                            <Label id="idLblStatus" text="{i18n>lblStatus}" visible="true"
+                                                    labelFor="idStatusInput" />
+                            <Input id="idStatusInput" showValueHelp="false"  
+                                                value="{locHeaderModel>/status}" editable="false" visible="true"/>
+                            <Label id="idLblUserStatus" text="{i18n>lblUserStatus}" visible="true"
+                                   labelFor="idUserStatusInput" />
+                            <Input id="idUserStatusInput" showValueHelp="false"  
+                                   value="{locHeaderModel>/userStatus}" editable="false" visible="true"/>   
+
+                    </f:SimpleForm>
+
+                    <f:SimpleForm class="sapUiSizeCompact" layout="ColumnLayout" columnsM="1" columnsL="3" columnsXL="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+                                  visible="{locHeaderModel>/isAppTypeSelected}">
+                        <Label id="idLblTotalQty" text="{i18n>lblTotalQty}" visible="true"
+                                                labelFor="idTotalQtyInput" />
+                        <Input id="idTotalQtyInput" showValueHelp="false"  
+                                            value="{locHeaderModel>/totalQty}" editable="false" visible="true"/>
+                        <Label id="idLblUoM" text="{i18n>lblUoM}" visible="true"
+                                                labelFor="idUoMInput" />
+                        <Input id="idUoMInput" showValueHelp="false"  
+                                            value="{locHeaderModel>/uom}" editable="false" visible="true"/>
+
+                        <Label id="idLblDeliveredQty" text="{i18n>lblDeliveredQty}" visible="true"
+                                                labelFor="idDeliveredQtyInput" />
+                        <Input id="idDeliveredQtyInput" showValueHelp="false"  
+                                            value="{locHeaderModel>/deliveredQty}" editable="false" visible="true"/>                
+
+                        
+                    </f:SimpleForm>  
+
+                    <f:SimpleForm >
+                        <Button text="{i18n>btnGo}" type="Emphasized" press="onPressGo"/>
+
+                        
+                        <Button text="{i18n>btnChkMaterialAvailability}" type="Emphasized" visible="{locHeaderModel>/changeOrderAppVisibility}" enabled="{locHeaderModel>/enableButtons}"  press="onPressCheckMaterialAvailability"/>
+                        <Button text="{i18n>btnReleaseOrder}" type="Emphasized" visible="{locHeaderModel>/changeOrderAppVisibility}" enabled="{locHeaderModel>/enableButtons}" press="onReleaseOrder"/>
+                        <Button text="{i18n>btnReprint}" type="Emphasized" visible="{locHeaderModel>/changeOrderAppVisibility}" enabled="{locHeaderModel>/enableReprintButton}" press="onReprint"/>
+                        <!-- <core:Icon src="sap-icon://complete" color="#AADB1E"> </core:Icon>
+                        <core:Icon src="sap-icon://sys-cancel" color="#ff0000"> </core:Icon> -->
+                    </f:SimpleForm>
+
+                    <Toolbar>
+                    </Toolbar>
+                        <!-- </f:SimpleForm> -->
+                    <TabContainer class="sapUiSizeCompact" id="idOrderDetailsTabContainer" backgroundDesign="Transparent"
+                                                    visible="{locHeaderModel>/isAppTypeSelected}" itemClose="onTabClose" >
+                                        
+                        <items>
+                            <TabContainerItem id="idComponentTab" name="{i18n>tabCompOverview}" >
+                                <content>
+                                    <!-- <CheckBox valueState="Success" editable="false" selected="true" />
+		                            <CheckBox tooltip ="Error" valueState="Error" editable = "false" />         -->
+
+                                    <Table id="idCompOverviewTable" visible="true" items="{path: 'componentJSONModel>/', templateShareable: true}" 
+                                            noDataText="{i18n>noData}" alternateRowColors="true">
+								
+								        <columns>
+                                            <Column id="idColAvailable" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true" >
+                                                    <!-- visible="{=${locHeaderModel>/changeOrderAppVisibility}}" -->
+                                                <Label id="idLblAvailable" text="{i18n>lblComponentAvailable}" />
+                                            </Column>
+
+                                            
+                                            <Column id= "idColComponent" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true">
+                                                <Label text="{i18n>lblComponent}" wrapping="true" />
+                                            </Column>
+                                            <Column id = "idColDescription" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true">
+                                                    <!-- sortIndicator="Ascending"> -->
+                                                <Label text="{i18n>lblComponentDesc}" />
+                                            </Column>
+
+                                            <Column id="idColRequirementQty" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true"
+                                                    hAlign = "Right">
+                                                <Label text="{i18n>lblRequirementQty}" />
+                                            </Column>
+
+                                            <Column id="idColCommittedQty" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true"
+                                                    hAlign="Right">
+                                                <Label text="{i18n>lblCommittedQty}" />
+                                            </Column>
+
+                                            <Column id="idColQtyWithdrawn" minScreenWidth="Desktop" popinDisplay="Inline" demandPopin="true"
+                                                    hAlign="Right">
+                                                <Label text="{i18n>lblQtyWithdrawn}" wrapping="true" />
+                                            </Column>
+
+                                            <Column id="idColUoM" minScreenWidth="Desktop" popinDisplay="Inline" demandPopin="true" >
+                                                <Label text="{i18n>lblUoM}" wrapping="true"/>
+                                            </Column>
+                                            <Column id="idColOperation" minScreenWidth="Desktop" popinDisplay="Inline" demandPopin="true">
+                                                <Label text="{i18n>lblOperation}" />
+                                            </Column>
+                                            
+                                            <Column id="idColBackflush" minScreenWidth="Desktop" popinDisplay="Inline" demandPopin="true">
+                                                <Label text="{i18n>lblBackflush}" />
+                                            </Column>
+									
+								        </columns>
+								        <items>
+								    	<ColumnListItem>
+									    	<cells>
+
+                                                
+                                                <core:Icon src="{= ${componentJSONModel>Available} === 'Y'? 'sap-icon://complete' : 'sap-icon://sys-cancel'}" 
+                                                           color="{= ${componentJSONModel>Available} === 'Y' ?'#037203':'#a50404'}" >
+                                                           </core:Icon>
+
+                                                <!-- <HBox id="idAvailabilityCheck" class="alignContentCenter">
+                                                    <core:Icon src="sap-icon://complete" color="#037203" 
+                                                    visible="{=${componentJSONModel>Available} === 'Y' ? true : false}">
+                                                    <core:layoutData>
+                                                    <FlexItemData growFactor="1" />
+                                                    </core:layoutData>
+                                                    </core:Icon>
+                                                    <core:Icon src="sap-icon://sys-cancel" color="#a50404" visible="{=${componentJSONModel>Available} === 'Y' ? false : true}">
+                                                    <core:layoutData>
+                                                    <FlexItemData growFactor="1" />
+                                                    </core:layoutData>
+                                                    </core:Icon>
+                                                </HBox> -->
+
+                                                <Text text="{componentJSONModel>Matnr}"/><!-- Component number -->
+                                                <Text text="{componentJSONModel>Matxt}"/><!-- Component desc -->
+
+                                                <Text text="{componentJSONModel>Menge}" textAlign="Right"/> <!-- Requirement Qty -->
+                                                <Text text="{componentJSONModel>Dvmeng}" textAlign="Right"/><!-- Committed Qty -->
+
+                                                <Text text="{componentJSONModel>Denmng}" textAlign="Right"/><!-- Qty withdrawn -->
+                                                <Text text="{componentJSONModel>Einheit}"/><!-- Base Unit -->
+                                                <Text text="{componentJSONModel>Vornr}"/><!-- Operation -->
+
+                                                <CheckBox selected="{componentJSONModel>Rgekz}" editable="false"/><!-- Backflush -->
+
+										    </cells>
+									    </ColumnListItem>
+								        </items>
+							        </Table>
+
+                                </content>
+                            </TabContainerItem>
+                                            
+                            <TabContainerItem id="idOperationTab" name="{i18n>tabOperOverview}">
+                                <content>
+                                	
+
+                                    <Table id="idOperOverviewTable" visible="true"  items="{path: 'operationJSONModel>/', templateShareable: true}" noDataText="{i18n>noData}" alternateRowColors="true">                            
+								
+								        <columns>
+                                            <Column id="idColOperation2" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true">
+                                                <Label text="{i18n>lblOperation}" wrapping="true"/>
+                                            </Column>
+                                            <Column id= "idColWorkCenter" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true">
+                                                <Label text="{i18n>lblWorkCenter}" wrapping="true"/>
+                                            </Column>
+                                            <Column id = "idColControlKey" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true">
+                                                <Label text="{i18n>lblControlKey}" wrapping="true"/>
+                                            </Column>
+
+                                            <Column id="idColOperShortText" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true">
+                                                <Label text="{i18n>lblOperationShortText}" wrapping="true" />
+                                            </Column>
+
+                                            <Column id="idColSysStatus" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true"
+                                                    hAlign="Center">
+                                                <Label text="{i18n>lblSysStatus}" wrapping="true"/>
+                                            </Column>
+                                            <Column id="idColOperationQty" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true"
+                                                    hAlign="Right">
+                                                <Label text="{i18n>lblOperationQty}" wrapping="true" />
+                                            </Column>
+
+                                            <Column id="idColUoM2" minScreenWidth="Tablet" popinDisplay="Inline" demandPopin="true" >
+                                                <Label text="{i18n>lblUoM}" wrapping="true"/>
+                                            </Column>
+                                            
+									
+								        </columns>
+								        <items>
+								    	<ColumnListItem>
+									    	<cells>
+                                                <!-- IDs for table column controls create problems in launchpad while loading the app, hence not using ids -->
+                                                <Text text="{operationJSONModel>Vornr}"/> <!-- Operation -->
+                                                <Text text="{operationJSONModel>Arbpl}"/> <!-- Work center -->
+                                                <Text text="{operationJSONModel>Steus}"/> <!-- Control Key -->
+
+                                                <Text text="{operationJSONModel>Ltxa1}"/> <!-- Operation short text -->
+                                                <Text text="{operationJSONModel>Vsttxt}"/> <!-- System status -->
+                                                <Text text="{operationJSONModel>Mgvrg}" textAlign="Right"/> <!-- Operation Quantity -->
+                                                <Text text="{operationJSONModel>Meinh}"/> <!-- UoM -->
+                                                
+
+										    </cells>
+									    </ColumnListItem>
+								        </items>
+							        </Table>
+                                </content>
+                            </TabContainerItem>
+                        </items>
+                    </TabContainer>
+
+                </content>
+
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
